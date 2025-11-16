@@ -1,5 +1,4 @@
 public class ValidateUtils {
-    public class ValidadorUtils {
 
         // Validação de telefone: aceita +55, números com 10 a 15 dígitos
         public static boolean validarTelefone(String telefone) {
@@ -30,9 +29,8 @@ public class ValidateUtils {
         }
 
         // Validação de nome: apenas letras e espaços
-        public static boolean validarNome(String nome) {
-            return nome != null && nome.matches("^[A-Za-zÀ-ÿ\\s]{2,}$");
+        public static boolean validarNome(String name) {
+            return name != null && name.matches("^[A-Za-zÀ-ÿ\\s]{2,}$");
         }
-    }
-
 }
+

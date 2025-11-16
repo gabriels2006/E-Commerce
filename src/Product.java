@@ -12,6 +12,7 @@ public class Product {
     private String model;
     private String manufacturer;
     private LocalDate manufactureDate;
+    private float discount;
 
     //Construtor de Produto Completo
     public Product(String name, String description, float price, int quantityInStock, String category, String brand, String model, String manufacturer, LocalDate manufactureDate) {
@@ -29,11 +30,13 @@ public class Product {
             this.description = description;
             this.price = price;
             this.quantityInStock = quantityInStock;
+            this.active = true;
             this.category = category;
             this.brand = brand;
             this.model = model;
             this.manufacturer = manufacturer;
             this.manufactureDate = manufactureDate;
+            this.discount = 0;
 
     }
 
@@ -48,12 +51,13 @@ public class Product {
         this.quantityInStock -= quantity;
     }
 
-    // Aplica desconto
-    public void applyDiscount(float percentage) {
-        if (percentage < 0 || percentage > 100) {
-            throw new IllegalArgumentException("Percentual inválido.");
-        }
-        this.price -= this.price * (percentage / 100);
+    public void setDiscount(float discount) {
+        if (discount < 0 || discount > 100) throw new IllegalArgumentException("Percentual inválido.");
+        this.discount = discount;
+    }
+
+    public float getFinalPrice() {
+        return price - (price * (discount / 100));
     }
 
     // Metodo para verificar disponibilidade (Co-validar com estoque)
@@ -133,6 +137,7 @@ public class Product {
     public void setManufactureDate(LocalDate manufactureDate) {
         this.manufactureDate = manufactureDate;
     }
+
 
     @Override
     public String toString() {

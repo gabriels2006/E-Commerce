@@ -1,26 +1,23 @@
+import java.time.LocalDate;
+
 public class Main {
     public static void main(String[] args) {
+        Client c1 = new Client("Gabriel", "02/09/2006", "gabriel@123.com", "Gabriel@1398", "(11) 987907654");
 
-        Client C1 = new Client("Gabriel", 19, "gabriel@123.com","SuaSenha@123","(11) 98792-4054");
+        Product notebook = new Product("Notebook", "Ultrabook leve", 3500.0f, 10,
+                "Eletrônicos", "Dell", "XPS 13", "Dell Inc.", LocalDate.of(2023, 5, 10));
 
-        // Validação de telefone
-        if (ValidateUtils.ValidadorUtils.validarTelefone(C1.getTelefone())) {
-            System.out.println("Telefone válido");
-        } else {
-            System.out.println("Telefone inválido");
-        }
-        // Validação de email
-        if (ValidateUtils.ValidadorUtils.validarEmail(C1.getEmail())) {
-            System.out.println("Email válido!");
-        } else {
-            System.out.println("Email inválido!");
-        }
-        // Validação de Senha
-        if (!ValidateUtils.ValidadorUtils.validarSenha(C1.getPassword())) {
-            System.out.println("Senha fraca!");
-        } else {
-            System.out.println("Senha forte!");
-        }
+        Product mouse = new Product("Mouse", "Mouse sem fio", 150.0f, 20,
+                "Periféricos", "Logitech", "M185", "Logitech", LocalDate.of(2023, 1, 15));
+
+        Order order = new Order(c1);
+        order.addProduct(notebook, 2);
+        order.addProduct(mouse, 3);
+
+        System.out.println(order);
+        order.confirmOrder();
+        System.out.println("Estoque notebook: " + notebook.getQuantityInStock());
+        System.out.println("Estoque mouse: " + mouse.getQuantityInStock());
     }
 }
 
