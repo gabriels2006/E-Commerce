@@ -4,7 +4,7 @@ public class OrderItem {
     private Product product;
     private int quantity;
 
-    public OrderItem(Product product, int quantity) {
+    public OrderItem(Product product, int quantity, float unitPrice) {
         if (quantity <= 0) throw new IllegalArgumentException("Quantidade inválida.");
         this.product = product;
         this.quantity = quantity;

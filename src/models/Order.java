@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Order {
 
+    private int id;
     private Client client;              // Cliente que fez o pedido
     private List<OrderItem> items;      // Lista de produtos + quantidade
     private LocalDate orderDate;        // Data do pedido
@@ -17,12 +18,17 @@ public class Order {
         this.orderDate = LocalDate.now();
     }
 
+    public Order() {
+
+    }
+
     // Adicionar produto ao pedido
     public void addProduct(Product product, int quantity) {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantidade inválida.");
         }
-        items.add(new OrderItem(product, quantity));
+        float unitPrice = product.getFinalPrice(); // ou product.getPrice()
+        items.add(new OrderItem(product, quantity, unitPrice));
     }
 
     // Confirmar pedido (reduz estoque dos produtos)
@@ -45,4 +51,11 @@ public class Order {
     public LocalDate getOrderDate() {
         return orderDate;
     }
+
+    public void setId(int id) { this.id = id; }
+
+    public void setOrderDate(LocalDate date) { this.orderDate = date; }
+
+    public void setItems(List<OrderItem> items) { this.items = items; }
+
 }

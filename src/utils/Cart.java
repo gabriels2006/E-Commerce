@@ -27,12 +27,14 @@ public class Cart {
             if (item.getProduct().equals(product)) {
                 // Atualizar quantidade
                 items.remove(item);
-                items.add(new OrderItem(product, item.getQuantity() + quantity));
+                float unitPrice = product.getFinalPrice();
+                items.add(new OrderItem(product, item.getQuantity() + quantity, unitPrice));
                 return;
             }
         }
         // Adicionar novo item
-        items.add(new OrderItem(product, quantity));
+        float unitPrice = product.getFinalPrice();
+        items.add(new OrderItem(product, quantity, unitPrice));
     }
     
     public void removeItem(OrderItem item) {
@@ -44,7 +46,8 @@ public class Cart {
             removeItem(item);
         } else {
             items.remove(item);
-            items.add(new OrderItem(item.getProduct(), newQuantity));
+            float unitPrice = item.getProduct().getFinalPrice();
+            items.add(new OrderItem(item.getProduct(), newQuantity, unitPrice));
         }
     }
     
