@@ -88,12 +88,15 @@ public class ClientDAO {
     
     private static Client mapResultSetToClient(ResultSet rs) throws SQLException {
         Client client = new Client(
+
             rs.getString("name"),
             rs.getDate("birth_date").toLocalDate().format(DMY),
             rs.getString("email"),
             rs.getString("password"),
             rs.getString("telefone")
         );
+
+        client.setId(rs.getInt("id"));
         
         if (rs.getString("cep") != null) {
             client.setCep(rs.getString("cep"));

@@ -92,8 +92,11 @@ Se preferir usar Maven, adicione as dependências no `pom.xml`:
    ```
 
 5. Clique em **Apply** e **OK**
+## Passo 6: Conectar banco de dados
 
-## Passo 6: Executar o Projeto
+1. Cerifique-se que o `database_schema.sql` esteja em seu gerenciador MySQL.
+2. Caso a conexão tenha uma porta, senha ou nome diferente, altere no arquivo `DataBaseConnection` na pasta `'ecommerce-javafx/src/utils/DataBaseConnection'`
+## Passo 7: Executar o Projeto
 
 1. Certifique-se de que a configuração `E-Commerce JavaFX` está selecionada na barra de ferramentas
 2. Clique no botão **Run** (ícone de play verde) ou pressione `Shift+F10`

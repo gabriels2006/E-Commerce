@@ -3,6 +3,8 @@ package models;
 public class OrderItem {
     private Product product;
     private int quantity;
+    private float unitPrice;
+
 
     public OrderItem(Product product, int quantity, float unitPrice) {
         if (quantity <= 0) throw new IllegalArgumentException("Quantidade inválida.");
@@ -12,7 +14,7 @@ public class OrderItem {
 
     public Product getProduct() { return product; }
     public int getQuantity() { return quantity; }
-
+    public float getUnitPrice() { return unitPrice; }
     public float getTotalPrice() {
         return product.getFinalPrice() * quantity;
     }

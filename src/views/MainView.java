@@ -77,7 +77,7 @@ public class MainView {
         
         // Botão do carrinho
         Button cartButton = new Button("🛒 Carrinho");
-        cartCountLabel = new Label("(" + cart.getItemCount() + ")");
+        cartCountLabel = new Label("(" + cart.getItems().size()+ ")");
         cartCountLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         cartCountLabel.setTextFill(Color.web("#f39c12"));
         
@@ -94,11 +94,12 @@ public class MainView {
         Button logoutButton = new Button("Sair");
         logoutButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 8 20; -fx-cursor: hand;");
         logoutButton.setOnAction(e -> {
+            System.out.println("Logout clicado!");
             dataStore.logout();
-            cart.clear();
             LoginView loginView = new LoginView();
             MainApp.getPrimaryStage().setScene(loginView.getScene());
         });
+
         
         header.getChildren().addAll(titleLabel, spacer, userLabel, cartBox, logoutButton);
         
@@ -225,7 +226,7 @@ public class MainView {
         addButton.setOnAction(e -> {
             int quantity = quantitySpinner.getValue();
             cart.addItem(product, quantity);
-            cartCountLabel.setText("(" + cart.getItemCount() + ")");
+            cartCountLabel.setText("(" + cart.getItems().size() + ")");
             
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Sucesso");

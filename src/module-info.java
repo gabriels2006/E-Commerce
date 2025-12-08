@@ -1,12 +1,8 @@
 module ecommerce.javafx {
     requires javafx.controls;
     requires javafx.fxml;
-    // adiciona suporte a JDBC
     requires java.sql;
-
-    // se usar coleções utilitárias
     requires java.base;
-
 
     opens app to javafx.fxml;
     opens views to javafx.fxml;

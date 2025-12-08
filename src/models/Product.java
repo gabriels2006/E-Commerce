@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Product {
 
     private String name;
+    private int id;
     private String description;
     private float price;
     private int quantityInStock;
@@ -67,6 +68,9 @@ public class Product {
         return active && quantityInStock > 0;
     }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public String getName() {
         return name;
@@ -138,6 +142,14 @@ public class Product {
 
     public void setManufactureDate(LocalDate manufactureDate) {
         this.manufactureDate = manufactureDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 

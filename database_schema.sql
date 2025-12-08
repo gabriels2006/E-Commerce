@@ -1,5 +1,5 @@
 -- Script SQL para criar as tabelas do banco de dados E-Commerce
--- Execute este script no seu banco MySQL para criar a estrutura necessária
+-- Execute este script no seu Gerenciador MySQL para criar a estrutura necessária
 
 CREATE DATABASE IF NOT EXISTS Ecommerce;
 USE Ecommerce;
@@ -59,6 +59,17 @@ CREATE TABLE IF NOT EXISTS order_items (
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS cart_items (
+    id INT AUTO_INCREMENT PRIMARY KEY
+    client_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10, 2) NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    );
 
 Use ecommerce;
 

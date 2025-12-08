@@ -142,19 +142,28 @@ public class ProductDAO {
         }
         return categories;
     }
-    
+
     private static Product mapResultSetToProduct(ResultSet rs) throws SQLException {
-        return new Product(
-            rs.getString("name"),
-            rs.getString("description"),
-            rs.getFloat("price"),
-            rs.getInt("quantity_in_stock"),
-            rs.getString("category"),
-            rs.getString("brand"),
-            rs.getString("model"),
-            rs.getString("manufacturer"),
-            rs.getDate("manufacture_date").toLocalDate()
+        Product product = new Product(
+                rs.getString("name"),
+                rs.getString("description"),
+                rs.getFloat("price"),
+                rs.getInt("quantity_in_stock"),
+                rs.getString("category"),
+                rs.getString("brand"),
+                rs.getString("model"),
+                rs.getString("manufacturer"),
+                rs.getDate("manufacture_date").toLocalDate()
         );
+
+        // ESSENCIAL: setar o ID do banco
+        product.setId(rs.getInt("id"));
+
+        // Se tiver campos extras, também pode setar:
+        product.setDiscount(rs.getFloat("discount"));
+        product.setActive(rs.getBoolean("active"));
+
+        return product;
     }
 }
 

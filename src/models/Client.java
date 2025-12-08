@@ -7,6 +7,7 @@ public class Client {
 
     // Dados Cliente
     private String name;
+    private int id;
     private LocalDate birthDate;
     private String email;
     private String password;
@@ -96,6 +97,12 @@ public class Client {
         this.pais = pais;
     }
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     // @Override para quando for printar os dados do Cliente
     @Override
     public String toString() {

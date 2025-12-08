@@ -1,77 +1,90 @@
 package utils;
 
+import models.Client;
 import models.Product;
 import models.OrderItem;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Cart {
-    
+
     private static Cart instance;
-    private List<OrderItem> items;
-    
-    private Cart() {
-        items = new ArrayList<>();
-    }
-    
+
+    private Cart() {}
+
     public static Cart getInstance() {
         if (instance == null) {
             instance = new Cart();
         }
         return instance;
     }
-    
+
+    // Adicionar item direto no banco
     public void addItem(Product product, int quantity) {
-        // Verificar se o produto já está no carrinho
-        for (OrderItem item : items) {
-            if (item.getProduct().equals(product)) {
-                // Atualizar quantidade
-                items.remove(item);
-                float unitPrice = product.getFinalPrice();
-                items.add(new OrderItem(product, item.getQuantity() + quantity, unitPrice));
-                return;
-            }
-        }
-        // Adicionar novo item
         float unitPrice = product.getFinalPrice();
-        items.add(new OrderItem(product, quantity, unitPrice));
+        OrderItem newItem = new OrderItem(product, quantity, unitPrice);
+
+        try {
+            int clientId = DataStore.getInstance().getCurrentClient().getId();
+            CartDAO.addItem(clientId, newItem);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    
-    public void removeItem(OrderItem item) {
-        items.remove(item);
-    }
-    
+
+    // Atualizar quantidade (reinsere no banco)
     public void updateQuantity(OrderItem item, int newQuantity) {
-        if (newQuantity <= 0) {
-            removeItem(item);
-        } else {
-            items.remove(item);
-            float unitPrice = item.getProduct().getFinalPrice();
-            items.add(new OrderItem(item.getProduct(), newQuantity, unitPrice));
+        try {
+            int clientId = DataStore.getInstance().getCurrentClient().getId();
+            CartDAO.clearCart(clientId); // limpa tudo
+            if (newQuantity > 0) {
+                OrderItem newItem = new OrderItem(item.getProduct(), newQuantity, item.getProduct().getFinalPrice());
+                CartDAO.addItem(clientId, newItem); // reinsere
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-    
+
+    // Carregar carrinho do banco
     public List<OrderItem> getItems() {
-        return items;
-    }
-    
-    public float getTotal() {
-        float total = 0;
-        for (OrderItem item : items) {
-            total += item.getTotalPrice();
+        Client current = DataStore.getInstance().getCurrentClient();
+        if (current == null) {
+            // Nenhum cliente logado → retorna lista vazia
+            return List.of();
         }
-        return total;
+        try {
+            return CartDAO.loadCart(current.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return List.of();
+        }
     }
-    
-    public int getItemCount() {
-        return items.size();
+
+
+    // Remover item específico
+    public void removeItem(OrderItem item) {
+        try {
+            int clientId = DataStore.getInstance().getCurrentClient().getId();
+            int productId = item.getProduct().getId();
+            CartDAO.removeItem(clientId, productId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    
+
+    // Limpar carrinho no banco
     public void clear() {
-        items.clear();
+        try {
+            int clientId = DataStore.getInstance().getCurrentClient().getId();
+            CartDAO.clearCart(clientId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    
+
     public boolean isEmpty() {
-        return items.isEmpty();
+        return getItems().isEmpty();
     }
 }
+
