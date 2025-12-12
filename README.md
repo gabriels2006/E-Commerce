@@ -1,4 +1,4 @@
-# E-Commerce de Eletrônicos - JavaFX
+# E-Commerce de Eletrônicos - JavaFX (Desatualizado)
 
 Sistema de e-commerce desenvolvido em Java com interface gráfica JavaFX para venda de produtos eletrônicos.
 
